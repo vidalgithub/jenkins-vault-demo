@@ -9,26 +9,16 @@ pipeline {
             }
         }
 
+
         stage('Docker Demo') {
             steps {
-                    withVault(configuration: [timeout: 60, vaultCredentialId: 'vaultCred', vaultUrl: 'http://172.25.11.223:8200'], vaultSecrets: [[path: 'dockerhub/creds', secretValues: [[vaultKey: 'username'], [vaultKey: 'password']]]])  {
+                    withVault(configuration: [disableChildPoliciesOverride: false, timeout: 60, vaultCredentialId: 'vaultCred', vaultUrl: 'http://172.25.11.223:8200'], vaultSecrets: [[path: 'dockerhub/creds', secretValues: [[vaultKey: 'username'], [vaultKey: 'password']]]])  {
                         sh 'docker login -u $username -p $password'
                         sh 'docker build -t kemgou .'
                         sh 'docker tag kemgou vidaldocker/kemgou:demo'
                         sh 'docker push vidaldocker/kemgou:demo'
                     }
             }
-        }
-
-        /*stage('Docker Demo') {
-            steps {
-                    withVault(configuration: [disableChildPoliciesOverride: false, timeout: 60, vaultCredentialId: 'vaultCred', vaultUrl: 'http://52.87.227.35:8200'], vaultSecrets: [[path: 'dockerhub/creds', secretValues: [[vaultKey: 'username'], [vaultKey: 'password']]]])  {
-                        sh 'docker login -u $username -p $password'
-                        sh 'docker build -t kemgou .'
-                        sh 'docker tag kemgou vidaldocker/kemgou:demo'
-                        sh 'docker push vidaldocker/kemgou:demo'
-                    }
-            }
-        }*/ 
+        } 
     }
 }
