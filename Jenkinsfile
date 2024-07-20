@@ -11,7 +11,7 @@ pipeline {
 
         stage('Docker Demo') {
             steps {
-                    withVault(configuration: [disableChildPoliciesOverride: false, timeout: 60, vaultCredentialId: 'vaultCred', vaultUrl: 'http://54.172.147.69:8200'], vaultSecrets: [[path: 'dockerhub/creds', secretValues: [[vaultKey: 'username'], [vaultKey: 'password']]]])  {
+                    withVault(configuration: [disableChildPoliciesOverride: false, timeout: 60, vaultCredentialId: 'vaultCred', vaultUrl: 'http://vault.example.com:8200'], vaultSecrets: [[path: 'dockerhub/creds', secretValues: [[vaultKey: 'username'], [vaultKey: 'password']]]])  {
                         sh 'docker login -u $username -p $password'
                         sh 'docker build -t kemgou .'
                         sh 'docker tag kemgou vidaldocker/kemgou:demo'
