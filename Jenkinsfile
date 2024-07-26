@@ -8,7 +8,6 @@ pipeline {
                     url: 'https://github.com/vidalgithub/jenkins-vault-demo.git'
             }
         }
-
         stage('Docker Demo') {
             steps {
                     withVault(configuration: [disableChildPoliciesOverride: false, timeout: 60, vaultCredentialId: 'vaultCred', vaultUrl: 'http://vault.beitcloud.com:8200'], vaultSecrets: [[path: 'dockerhub/creds', secretValues: [[vaultKey: 'username'], [vaultKey: 'password']]]])  {
