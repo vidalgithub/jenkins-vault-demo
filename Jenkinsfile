@@ -8,6 +8,8 @@ pipeline {
                     url: 'https://github.com/vidalgithub/jenkins-vault-demo.git'
             }
         }
+
+
         
         stage('Docker Demo') {
             steps {
